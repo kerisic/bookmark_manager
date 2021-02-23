@@ -9,6 +9,10 @@ As a user
 So that I can look at pages I like
 I would like to see a list of bookmarks
 
+As a user
+So that I can go to a website that I like again
+I would like to save a bookmark for that website
+
 ### Database Setup
 - Connect to `psql`
 - Create the database using the `psql` command `CREATE DATABASE bookmark_manager;`
