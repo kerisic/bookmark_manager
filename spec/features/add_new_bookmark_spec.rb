@@ -4,6 +4,6 @@ feature 'To be able to remember which sites the user likes' do
     fill_in :url, with: 'http://www.sushi.com'
     fill_in :title, with: 'Sushi'
     click_button 'Submit'
-    expect(page).to have_content('Sushi')
+    expect(page).to have_link('Sushi', href: 'http://www.sushi.com')
   end
 end
