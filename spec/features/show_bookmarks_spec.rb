@@ -1,9 +1,8 @@
 feature 'User can see bookmarks' do
   scenario 'see all bookmarks' do
-
-    Bookmark.add_bookmark(title:'Makers', url:'http://www.makersacademy.com')
-    Bookmark.add_bookmark(title:'Destroy', url:'http://www.destroyallsoftware.com')
-    Bookmark.add_bookmark(title:'Google', url:'http://www.google.com')
+    Bookmark.add_bookmark(title: 'Makers', url: 'http://www.makersacademy.com')
+    Bookmark.add_bookmark(title: 'Destroy', url: 'http://www.destroyallsoftware.com')
+    Bookmark.add_bookmark(title: 'Google', url: 'http://www.google.com')
 
     visit '/bookmarks'
 
