@@ -28,6 +28,11 @@ describe Bookmark do
       expect(bookmark.title).to eq 'Sushi'
       expect(bookmark.url).to eq 'http://www.sushi.com'
     end
+
+    it 'does not add a new bookmark if the URL is not valid' do
+      Bookmark.add_bookmark(title: 'Sushi', url: 'not a real bookmark')
+      expect(Bookmark.all).to be_empty
+    end
   end
 
   describe '#title' do
