@@ -1,19 +1,32 @@
 <ul>
   <% @list.each do |bookmark| %>
+
   <li class="bookmark" id="bookmark-<%= bookmark.id %>">
-  <a href="<%= bookmark.url %>" target="blank">
-     <%= bookmark.title %>
-     </a>
+
+  <a href="<%= bookmark.url %>" target="blank"><%= bookmark.title %></a>
+
      <form action="/bookmarks/<%= bookmark.id %>" method="post">
      <input type="hidden" name='_method' value='DELETE'/>
      <input type="submit" value="Delete" />
      </form>
+
      <form action="/bookmarks/<%= bookmark.id %>/edit" method="get">
-       <input type="submit" value="Edit" />
+     <input type="submit" value="Edit" />
+     </form>
+
+     <ul>
+       <% bookmark.comments.each do |comment| %>
+       <li><%= comment.text %></li>
+       <% end %>
+     </ul>
+
+     <form action="/bookmarks/<%= bookmark.id %>/comments/new" method="get">
+     <input type="submit" value="Add Comment" />
      </form>
   </li>
   <% end %>
 </ul>
+
 <p>
   <%= flash[:notice] %>
 </p>

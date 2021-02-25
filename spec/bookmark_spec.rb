@@ -2,6 +2,7 @@ require 'bookmark'
 require 'database_helpers'
 
 describe Bookmark do
+  let(:comment_class) { double(:comment_class) }
   describe 'all' do
     it 'returns all bookmarks' do
       bookmark = Bookmark.add_bookmark(title: 'Makers Academy', url: 'http://www.makersacademy.com')
@@ -21,7 +22,7 @@ describe Bookmark do
   describe '#self.add_bookmark' do
     it 'takes the user input and adds it as a new bookmark into the database' do
       bookmark = Bookmark.add_bookmark(title: 'Sushi', url: 'http://www.sushi.com')
-      persisted_data = persisted_data(id: bookmark.id)
+      persisted_data = persisted_data(table: 'bookmarks', id: bookmark.id)
 
       expect(bookmark).to be_a Bookmark
       expect(bookmark.id).to eq persisted_data.first['id']
@@ -82,6 +83,15 @@ describe Bookmark do
       expect(result.id).to eq bookmark.id
       expect(result.title).to eq 'Cheese'
       expect(result.url).to eq 'http://www.cheese.com'
+    end
+  end
+
+  describe '#comments' do
+    it 'returns a list of comments on the bookmark' do
+      bookmark = Bookmark.add_bookmark(title: 'Makers', url: 'http://www.makersacademy.com')
+      expect(comment_class).to receive(:where).with(bookmark.id)
+
+      bookmark.comments(comment_class)
     end
   end
 end
