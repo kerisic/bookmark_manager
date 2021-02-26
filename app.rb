@@ -1,9 +1,11 @@
 require 'sinatra/base'
 require 'sinatra/flash'
-require './lib/bookmark'
-require './lib/comment'
-require './database_connection_setup'
 require 'uri'
+require_relative './lib/bookmark'
+require_relative './lib/comment'
+require_relative './lib/tag'
+require_relative './lib/bookmarktag'
+require_relative './database_connection_setup'
 
 class BookmarkManager < Sinatra::Base
   enable :sessions, :method_override
@@ -52,9 +54,14 @@ class BookmarkManager < Sinatra::Base
   end
 
   post '/bookmarks/:id/tags' do
-    result = DatabaseConnection.query("INSERT INTO tags (content) VALUES('#{params[:tag]}') RETURNING id;")
-    DatabaseConnection.query("INSERT INTO bookmark_tags (bookmark_id, tag_id) VALUES(#{params[:id]}, '#{result[0]['id']}');")
+    tag = Tag.create(content: params[:tag])
+    BookmarkTag.create(bookmark_id: params[:id], tag_id: tag.id)
     redirect '/bookmarks'
+  end
+
+  get '/tags/:id/bookmarks' do
+    @tag = Tag.find(id: params[:id])
+    erb :'tags/index'
   end
 
   run! if app_file == $0

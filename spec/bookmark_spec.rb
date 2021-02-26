@@ -1,4 +1,5 @@
 require 'bookmark'
+require 'bookmarktag'
 require 'database_helpers'
 
 describe Bookmark do
@@ -99,11 +100,29 @@ describe Bookmark do
   describe '#tags' do
     it 'returns a list of tags on the bookmark' do
       bookmark = Bookmark.add_bookmark(title: 'Makers Academy', url: 'http://www.makersacademy.com')
-      result = DatabaseConnection.query("INSERT INTO tags (content) VALUES('Test tag') RETURNING id;")
-      DatabaseConnection.query("INSERT INTO bookmark_tags (bookmark_id, tag_id) VALUES('#{bookmark.id}','#{result[0]['id']}')")
-      tag = bookmark.tags.first
+      expect(tag_class).to receive(:where).with(bookmark_id: bookmark.id)
 
-      expect(tag['content']).to eq 'Test tag'
+      bookmark.tags(tag_class)
+    end
+  end
+
+  describe '#where' do
+    it 'returns bookmarks with the given tag id' do
+      bookmark = Bookmark.add_bookmark(url: "http://www.makersacademy.com", title: 'Makers')
+      tag1 = Tag.create(content: 'test tag 1')
+      tag2 = Tag.create(content: 'test tag 2')
+
+      BookmarkTag.create(bookmark_id: bookmark.id, tag_id: tag1.id)
+      BookmarkTag.create(bookmark_id: bookmark.id, tag_id: tag2.id)
+
+      bookmarks = Bookmark.where(tag_id: tag1.id)
+      result = bookmarks.first
+
+      expect(bookmarks.length).to eq 1
+      expect(result).to be_a Bookmark
+      expect(result.id).to eq bookmark.id
+      expect(result.title).to eq bookmark.title
+      expect(result.url).to eq bookmark.url
     end
   end
 end

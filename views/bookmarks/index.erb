@@ -4,13 +4,20 @@
   <li class="bookmark" id="bookmark-<%= bookmark.id %>">
 
   <a href="<%= bookmark.url %>" target="blank"><%= bookmark.title %></a>
-
-      <ul>
-        <% bookmark.tags.each do |tag| %>
-        <li><%= tag['content'] %></li>
-        <% end %>
-      </ul>
-
+  <% if bookmark.tags.length > 0 %>
+      <div>
+        <h2>Tags</h2>
+        <ul>
+          <% bookmark.tags.each do |tag| %>
+            <li>
+              <a href="/tags/<%= tag.id %>/bookmarks">
+                <%= tag.content %>
+              </a>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
      <form action="/bookmarks/<%= bookmark.id %>/tags/new" method="get">
        <input type="submit" value="Add Tag" />
        </form>
@@ -23,7 +30,7 @@
      <form action="/bookmarks/<%= bookmark.id %>/edit" method="get">
      <input type="submit" value="Edit" />
      </form>
-
+     <h2>Comments</h2>
      <ul>
        <% bookmark.comments.each do |comment| %>
        <li><%= comment.text %></li>
