@@ -3,6 +3,7 @@ require 'database_helpers'
 
 describe Bookmark do
   let(:comment_class) { double(:comment_class) }
+  let(:tag_class) {double(:tag_class)}
   describe 'all' do
     it 'returns all bookmarks' do
       bookmark = Bookmark.add_bookmark(title: 'Makers Academy', url: 'http://www.makersacademy.com')
@@ -92,6 +93,17 @@ describe Bookmark do
       expect(comment_class).to receive(:where).with(bookmark.id)
 
       bookmark.comments(comment_class)
+    end
+  end
+
+  describe '#tags' do
+    it 'returns a list of tags on the bookmark' do
+      bookmark = Bookmark.add_bookmark(title: 'Makers Academy', url: 'http://www.makersacademy.com')
+      result = DatabaseConnection.query("INSERT INTO tags (content) VALUES('Test tag') RETURNING id;")
+      DatabaseConnection.query("INSERT INTO bookmark_tags (bookmark_id, tag_id) VALUES('#{bookmark.id}','#{result[0]['id']}')")
+      tag = bookmark.tags.first
+
+      expect(tag['content']).to eq 'Test tag'
     end
   end
 end

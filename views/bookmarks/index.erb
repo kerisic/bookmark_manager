@@ -5,6 +5,12 @@
 
   <a href="<%= bookmark.url %>" target="blank"><%= bookmark.title %></a>
 
+      <ul>
+        <% bookmark.tags.each do |tag| %>
+        <li><%= tag['content'] %></li>
+        <% end %>
+      </ul>
+
      <form action="/bookmarks/<%= bookmark.id %>/tags/new" method="get">
        <input type="submit" value="Add Tag" />
        </form>

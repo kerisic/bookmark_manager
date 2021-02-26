@@ -49,6 +49,10 @@ class Bookmark
     comment_class.where(id)
   end
 
+  def tags
+    DatabaseConnection.query("SELECT content FROM bookmark_tags INNER JOIN tags ON tags.id = bookmark_tags.tag_id WHERE bookmark_tags.bookmark_id = #{id};")
+  end
+
   def self.is_url?(url)
     url =~ /\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/
   end
