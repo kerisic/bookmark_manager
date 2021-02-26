@@ -1,4 +1,4 @@
-require 'databaseconnection'
+require_relative 'databaseconnection'
 
 class Comment
   def self.create(bookmark_id:, text:)
