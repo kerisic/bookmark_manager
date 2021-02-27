@@ -16,12 +16,15 @@ end
 
 task :create_tables do
   connection = PG.connect(dbname: 'bookmark_manager_test')
+
   connection.exec(
     "CREATE TABLE bookmarks(id SERIAL PRIMARY KEY, url VARCHAR (60)); "
   )
+
   connection.exec(
     "ALTER TABLE bookmarks ADD COLUMN title VARCHAR (60);"
   )
+
   connection.exec(
     "CREATE TABLE comments(
       id SERIAL PRIMARY KEY,
@@ -29,6 +32,7 @@ task :create_tables do
       bookmark_id INTEGER REFERENCES bookmarks (id)
     );"
   )
+
   connection.exec(
     "ALTER TABLE comments
       DROP CONSTRAINT comments_bookmark_id_fkey,
@@ -37,12 +41,14 @@ task :create_tables do
         REFERENCES bookmarks(id)
         ON DELETE CASCADE;"
   )
+
   connection.exec(
     "CREATE TABLE tags(
       id SERIAL PRIMARY KEY,
       content VARCHAR (60)
     );"
   )
+
   connection.exec(
     "CREATE TABLE bookmark_tags(
       id SERIAL PRIMARY KEY,
@@ -50,11 +56,11 @@ task :create_tables do
       tag_id INTEGER REFERENCES tags (id)
     );"
   )
+
   connection.exec(
     "CREATE TABLE users(
       id SERIAL PRIMARY KEY,
       email VARCHAR (255) UNIQUE NOT NULL,
-      password VARCHAR (50) NOT NULL
       password VARCHAR (80) NOT NULL
     );"
   )
