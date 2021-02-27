@@ -1,12 +1,25 @@
 source 'https://rubygems.org'
 
-gem 'bcrypt'
-gem 'pg'
-gem 'rubocop'
-gem 'simplecov'
-gem 'simplecov-console'
-gem 'sinatra'
-gem 'sinatra-flash'
+group :test, :development, :production do
+  gem 'pg'
+  gem 'rack'
+  gem 'sinatra'
+  gem 'uri'
+  gem 'bcrypt'
+end
 
-gem 'capybara', group: :test
-gem 'rspec', group: :test
+group :development, :production do
+  gem 'puma'
+  gem 'sinatra-flash'
+end
+
+group :test, :development do
+  gem 'rake'
+  gem 'rubocop', require: false
+  gem 'rubocop-rspec', require: false
+end
+
+group :test do
+  gem 'capybara'
+  gem 'rspec'
+end
