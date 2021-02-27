@@ -13,10 +13,10 @@ group :test, :development, :production do
   gem 'sinatra'
   gem 'uri'
   gem 'bcrypt'
+  gem 'rake'
 end
 
 group :test, :development do
-  gem 'rake'
   gem 'rubocop', require: false
   gem 'rubocop-rake', require: false
   gem 'rubocop-rspec', require: false
