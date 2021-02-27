@@ -4,7 +4,7 @@ require 'database_helpers'
 
 describe Bookmark do
   let(:comment_class) { double(:comment_class) }
-  let(:tag_class) {double(:tag_class)}
+  let(:tag_class) { double(:tag_class) }
   describe 'all' do
     it 'returns all bookmarks' do
       bookmark = Bookmark.add_bookmark(title: 'Makers Academy', url: 'http://www.makersacademy.com')
@@ -108,7 +108,7 @@ describe Bookmark do
 
   describe '#where' do
     it 'returns bookmarks with the given tag id' do
-      bookmark = Bookmark.add_bookmark(url: "http://www.makersacademy.com", title: 'Makers')
+      bookmark = Bookmark.add_bookmark(url: 'http://www.makersacademy.com', title: 'Makers')
       tag1 = Tag.create(content: 'test tag 1')
       tag2 = Tag.create(content: 'test tag 2')
 

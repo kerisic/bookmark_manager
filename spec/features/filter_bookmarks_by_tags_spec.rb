@@ -22,8 +22,8 @@ feature 'Filter bookmarks by tags' do
 
     first('.bookmark').click_link 'Testing'
 
-    expect(page).to have_link 'Makers', href: "http://www.makersacademy.com"
-    expect(page).to have_link 'Sushi', href: "http://www.sushi.com"
-    expect(page).not_to have_link 'Cheese', href: "http://www.cheese.com"
+    expect(page).to have_link 'Makers', href: 'http://www.makersacademy.com'
+    expect(page).to have_link 'Sushi', href: 'http://www.sushi.com'
+    expect(page).not_to have_link 'Cheese', href: 'http://www.cheese.com'
   end
 end

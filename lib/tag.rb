@@ -1,13 +1,10 @@
 require_relative 'databaseconnection'
 
 class Tag
-
   def self.create(content:)
     result = DatabaseConnection.query("SELECT * FROM tags WHERE content = '#{content}';").first
-   if !result
-     result = DatabaseConnection.query("INSERT INTO tags (content) VALUES('#{content}') RETURNING id, content;").first
-   end
-   Tag.new(id: result['id'], content: result['content'])
+    result ||= DatabaseConnection.query("INSERT INTO tags (content) VALUES('#{content}') RETURNING id, content;").first
+    Tag.new(id: result['id'], content: result['content'])
   end
 
   def self.find(id:)

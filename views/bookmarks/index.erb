@@ -1,6 +1,6 @@
 <% if @user %>
 
-<h1>Welcome, <%= @user.email %><h1> 
+<h2>Welcome, <%= @user.email %></h2>
 
 <% end %>
 
@@ -9,43 +9,43 @@
 
   <li class="bookmark" id="bookmark-<%= bookmark.id %>">
 
-  <a href="<%= bookmark.url %>" target="blank"><%= bookmark.title %></a>
-  <% if bookmark.tags.length > 0 %>
-      <div>
-        <h2>Tags</h2>
-        <ul>
-          <% bookmark.tags.each do |tag| %>
-            <li>
-              <a href="/tags/<%= tag.id %>/bookmarks">
-                <%= tag.content %>
-              </a>
-            </li>
-          <% end %>
-        </ul>
-      </div>
+    <a href="<%= bookmark.url %>" target="blank"><%= bookmark.title %></a>
+    <% if bookmark.tags.length > 0 %>
+    <div>
+      <h2>Tags</h2>
+      <ul>
+        <% bookmark.tags.each do |tag| %>
+        <li>
+          <a href="/tags/<%= tag.id %>/bookmarks">
+            <%= tag.content %>
+          </a>
+        </li>
+        <% end %>
+      </ul>
+    </div>
     <% end %>
-     <form action="/bookmarks/<%= bookmark.id %>/tags/new" method="get">
-       <input type="submit" value="Add Tag" />
-       </form>
+    <form action="/bookmarks/<%= bookmark.id %>/tags/new" method="get">
+      <input type="submit" value="Add Tag" />
+    </form>
 
-     <form action="/bookmarks/<%= bookmark.id %>" method="post">
-     <input type="hidden" name='_method' value='DELETE'/>
-     <input type="submit" value="Delete" />
-     </form>
+    <form action="/bookmarks/<%= bookmark.id %>" method="post">
+      <input type="hidden" name='_method' value='DELETE' />
+      <input type="submit" value="Delete" />
+    </form>
 
-     <form action="/bookmarks/<%= bookmark.id %>/edit" method="get">
-     <input type="submit" value="Edit" />
-     </form>
-     <h2>Comments</h2>
-     <ul>
-       <% bookmark.comments.each do |comment| %>
-       <li><%= comment.text %></li>
-       <% end %>
-     </ul>
+    <form action="/bookmarks/<%= bookmark.id %>/edit" method="get">
+      <input type="submit" value="Edit" />
+    </form>
+    <h2>Comments</h2>
+    <ul>
+      <% bookmark.comments.each do |comment| %>
+      <li><%= comment.text %></li>
+      <% end %>
+    </ul>
 
-     <form action="/bookmarks/<%= bookmark.id %>/comments/new" method="get">
-     <input type="submit" value="Add Comment" />
-     </form>
+    <form action="/bookmarks/<%= bookmark.id %>/comments/new" method="get">
+      <input type="submit" value="Add Comment" />
+    </form>
   </li>
   <% end %>
 </ul>
@@ -58,4 +58,8 @@
   URL: <input type='text' name='url'>
   Title: <input type="text" name="title">
   <input type='submit' value='Submit'>
+</form>
+
+<form action="/sessions/destroy" method="post">
+  <input type="submit" value="Sign out" />
 </form>
