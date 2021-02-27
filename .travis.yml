@@ -2,6 +2,8 @@ language: ruby
 
 before_install:
     - gem install bundler
+    
+rvm: 2.7.2
 
 services:
   - postgresql

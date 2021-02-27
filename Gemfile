@@ -1,5 +1,12 @@
 source 'https://rubygems.org'
 
+ruby '2.7.2'
+
+group :development, :production do
+  gem 'puma'
+  gem 'sinatra-flash'
+end
+
 group :test, :development, :production do
   gem 'pg'
   gem 'rack'
@@ -8,14 +15,10 @@ group :test, :development, :production do
   gem 'bcrypt'
 end
 
-group :development, :production do
-  gem 'puma'
-  gem 'sinatra-flash'
-end
-
 group :test, :development do
   gem 'rake'
   gem 'rubocop', require: false
+  gem 'rubocop-rake', require: false
   gem 'rubocop-rspec', require: false
 end
 
